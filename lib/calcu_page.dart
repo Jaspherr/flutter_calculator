@@ -7,13 +7,20 @@ class CalcuPage extends StatefulWidget {
   const CalcuPage({super.key});
 
   @override
-  State<CalcuPage> createState() => _HomePageState();
+  State<CalcuPage> createState() => _CalcuPageState();
 }
 
-class _HomePageState extends State<CalcuPage> {
-  final TextEditingController firstController = TextEditingController();
-  final TextEditingController secondController = TextEditingController();
+class _CalcuPageState extends State<CalcuPage> {
+  final TextEditingController firstField = TextEditingController();
+  final TextEditingController secondField = TextEditingController();
   double result = 0;
+
+  String formatResult(double result) {
+    if (result == result.roundToDouble()) {
+      return result.toStringAsFixed(0); 
+    }
+    return result.toStringAsFixed(1); // shows how many decimals
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +58,10 @@ class _HomePageState extends State<CalcuPage> {
                   height: 10,
                 ),
                 TextField(
-                  controller: firstController,
+                  controller: firstField,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Value',
-                    
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -63,7 +69,7 @@ class _HomePageState extends State<CalcuPage> {
                   height: 10,
                 ),
                 TextField(
-                  controller: secondController,
+                  controller: secondField,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Value',
@@ -79,8 +85,8 @@ class _HomePageState extends State<CalcuPage> {
                     GestureDetector(
                       onTap: () {
                         // code executed on button press
-                        double a = double.parse(firstController.text);
-                        double b = double.parse(secondController.text);
+                        double a = double.parse(firstField.text);
+                        double b = double.parse(secondField.text);
 
                         setState(() {
                           result = a + b;
@@ -119,8 +125,8 @@ class _HomePageState extends State<CalcuPage> {
                     GestureDetector(
                       onTap: () {
                         // code executed on button press
-                        double a = double.parse(firstController.text);
-                        double b = double.parse(secondController.text);
+                        double a = double.parse(firstField.text);
+                        double b = double.parse(secondField.text);
 
                         setState(() {
                           result = a - b;
@@ -158,8 +164,8 @@ class _HomePageState extends State<CalcuPage> {
                     GestureDetector(
                       onTap: () {
                         // code executed on button press
-                        double a = double.parse(firstController.text);
-                        double b = double.parse(secondController.text);
+                        double a = double.parse(firstField.text);
+                        double b = double.parse(secondField.text);
 
                         setState(() {
                           result = a * b;
@@ -197,8 +203,8 @@ class _HomePageState extends State<CalcuPage> {
                     GestureDetector(
                       onTap: () {
                         // code executed on button press
-                        double a = double.parse(firstController.text);
-                        double b = double.parse(secondController.text);
+                        double a = double.parse(firstField.text);
+                        double b = double.parse(secondField.text);
 
                         setState(() {
                           result = a / b;
@@ -237,8 +243,8 @@ class _HomePageState extends State<CalcuPage> {
                       onTap: () {
                         // code executed on button press
                         setState(() {
-                          firstController.clear();
-                          secondController.clear();
+                          firstField.clear();
+                          secondField.clear();
                           result = 0;
                         });
                       },
@@ -275,7 +281,7 @@ class _HomePageState extends State<CalcuPage> {
                   height: 20,
                 ),
                 Text(
-                  'Result: $result',
+                  'Result: ${formatResult(result)}',
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
